@@ -45,7 +45,8 @@ normalized_impact_filtered = normalized_impact_filtered[['Year',
                                                 'deforestation_HA', 
                                                 'shipping_volume_million_metric_tons', 
                                                 'cars_sold_non_EV', 
-                                                'cement_production_thousand_metric_tons'
+                                                'cement_production_thousand_metric_tons',
+                                                'tonnes_fish_landed'
                                                ]]
 
 # Plot

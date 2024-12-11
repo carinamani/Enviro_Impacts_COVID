@@ -173,6 +173,38 @@ cement_production = cement_production.filter(items=["Year", "cement_production_t
 #cement_production['geography'] = 'Global'
 
 
+# IPSOS happiness
+
+happiness = pd.read_csv(f"{cd}/DATA/RAW/IPSOS_happiness.csv")
+
+#happiness['source'] = 'IPSOS'
+#happiness['geography'] = 'Global average'
+
+
+# US NPS visits
+
+US_park_visits = pd.read_csv(f"{cd}/DATA/RAW/US_NPS_visits.csv")
+
+#US_park_visits['source'] = 'NPS'
+#US_park_visits['geography'] = 'USA'
+
+
+# FAO fish landings 
+fishing = pd.read_csv(f"{cd}/DATA/RAW/FAO_fish_landed.csv")
+fishing = fishing.loc[:, ~fishing.columns.str.contains('Flag')]
+fishing = fishing[fishing['Unit Name'] != 'Number']
+
+fishing_global = fishing.drop(columns=['Country Name En', 'Unit Name']).sum()
+
+fishing_global = fishing_global.reset_index()
+fishing_global.columns = ['Year', 'tonnes_fish_landed']
+
+fishing_global['Year'] = fishing_global['Year'].astype(int)
+
+#GHG_emissions['source'] = 'Friedlingstein et al (2023)'
+#GHG_emissions['geography'] = 'Global'
+
+
 ###### Merge data
 
 merged_data = tourist_arrivals.copy()  
@@ -184,6 +216,9 @@ merged_data = pd.merge(merged_data, shipping_emissions_annual, on='Year', how='o
 merged_data = pd.merge(merged_data, shipping_volume_long, on='Year', how='outer')
 merged_data = pd.merge(merged_data, car_sales, on='Year', how='outer')
 merged_data = pd.merge(merged_data, cement_production, on='Year', how='outer')
+merged_data = pd.merge(merged_data, happiness, on='Year', how='outer')
+merged_data = pd.merge(merged_data, US_park_visits, on='Year', how='outer')
+merged_data = pd.merge(merged_data, fishing_global, on='Year', how='outer')
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 
