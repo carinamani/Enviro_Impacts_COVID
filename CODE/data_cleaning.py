@@ -205,7 +205,6 @@ fishing_global['Year'] = fishing_global['Year'].astype(int)
 #fishing_global['geography'] = 'Global'
 
 
-
 # IEA passenger cars and vans
 emissions_cars_vans = pd.read_csv(f"{cd}/DATA/RAW/IEA_emissions_cars_vans.csv")
 
@@ -216,6 +215,43 @@ emissions_cars_vans = emissions_cars_vans.rename(columns={
 
 #emissions_cars_vans['source'] = 'IEA'
 #emissions_cars_vans['geography'] = 'Global'
+
+
+# OEC timber trade 
+timber_trade = pd.read_csv(f"{cd}/DATA/RAW/OEC_timber_trade.csv")
+
+timber_trade = timber_trade.drop(columns=['Continent ID', 'Continent', 'Country ID', 'Country', 'ISO 3', 'share'])
+timber_trade = timber_trade.groupby('Year')[['Trade Value']].sum().reset_index()
+
+timber_trade = timber_trade.rename(columns={
+    "Year": "Year",
+    "Trade Value": "exports_timber_products_USD"
+})
+
+#timber_trade['source'] = 'OEC'
+#timber_trade['geography'] = 'Global'
+
+
+# NBER US WFH 
+US_WFH = pd.read_excel(
+    f"{cd}/DATA/RAW/NBER_WFH.xlsx",
+    sheet_name="WFH 1965 - present",
+)
+
+US_WFH = US_WFH.drop(columns=['Source_historical_series', 'fullremote_hist', 'Source_fullremote_hist', 'Notes', 'License', 'Citation'])
+
+US_WFH['Year'] = US_WFH['date'].dt.year
+US_WFH = US_WFH.drop(columns=['date'])
+
+US_WFH_yearly_avg = US_WFH.groupby('Year').mean().reset_index()
+
+US_WFH_yearly_avg = US_WFH_yearly_avg.rename(columns={
+    "Year": "Year",
+    "WFH_share": "USA_WFH_share"
+})
+
+#US_WFH_yearly_avg['source'] = 'NBER'
+#US_WFH_yearly_avg['geography'] = 'USA'
 
 
 
@@ -234,6 +270,8 @@ merged_data = pd.merge(merged_data, happiness, on='Year', how='outer')
 merged_data = pd.merge(merged_data, US_park_visits, on='Year', how='outer')
 merged_data = pd.merge(merged_data, fishing_global, on='Year', how='outer')
 merged_data = pd.merge(merged_data, emissions_cars_vans, on='Year', how='outer')
+merged_data = pd.merge(merged_data, timber_trade, on='Year', how='outer')
+merged_data = pd.merge(merged_data, US_WFH_yearly_avg, on='Year', how='outer')
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 
