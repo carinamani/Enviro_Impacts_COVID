@@ -201,8 +201,22 @@ fishing_global.columns = ['Year', 'tonnes_fish_landed']
 
 fishing_global['Year'] = fishing_global['Year'].astype(int)
 
-#GHG_emissions['source'] = 'Friedlingstein et al (2023)'
-#GHG_emissions['geography'] = 'Global'
+#fishing_global['source'] = 'FAO'
+#fishing_global['geography'] = 'Global'
+
+
+
+# IEA passenger cars and vans
+emissions_cars_vans = pd.read_csv(f"{cd}/DATA/RAW/IEA_emissions_cars_vans.csv")
+
+emissions_cars_vans = emissions_cars_vans.rename(columns={
+    "Unnamed: 0": "Year",
+    "Car and vans emissions": "passenger_vehicle_emissions_Gt_co2"
+})
+
+#emissions_cars_vans['source'] = 'IEA'
+#emissions_cars_vans['geography'] = 'Global'
+
 
 
 ###### Merge data
@@ -219,6 +233,7 @@ merged_data = pd.merge(merged_data, cement_production, on='Year', how='outer')
 merged_data = pd.merge(merged_data, happiness, on='Year', how='outer')
 merged_data = pd.merge(merged_data, US_park_visits, on='Year', how='outer')
 merged_data = pd.merge(merged_data, fishing_global, on='Year', how='outer')
+merged_data = pd.merge(merged_data, emissions_cars_vans, on='Year', how='outer')
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 
