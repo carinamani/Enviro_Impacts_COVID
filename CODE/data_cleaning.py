@@ -15,21 +15,21 @@ cd = os.getcwd()
 
 
 
-###### Import data
+###### Import and clean data
 
 
 # UNWTO tourism arrivals 
 
 tourist_arrivals = pd.read_csv(f"{cd}/DATA/RAW/UNWTO_tourist_arrivals.csv")
 
-tourist_arrivals['source'] = 'UNWTO'
-tourist_arrivals['geography'] = 'Global'
+#tourist_arrivals['source'] = 'UNWTO'
+#tourist_arrivals['geography'] = 'Global'
 
 # IEA aviation emissions
 aviation_emissions = pd.read_csv(f"{cd}/DATA/RAW/IEA_aviation_emissions.csv")
 
-aviation_emissions['source'] = 'IEA'
-aviation_emissions['geography'] = 'Global'
+#aviation_emissions['source'] = 'IEA'
+#aviation_emissions['geography'] = 'Global'
 
 # Friedlingstein et al (2023) global carbon emissions 
 
@@ -50,8 +50,8 @@ GHG_emissions = GHG_emissions.rename(columns={
 
 GHG_emissions['total_emissions_GtCarbon'] = GHG_emissions['fossil_fuel_emissions_GtCarbon'] + GHG_emissions['land_use_emissions_GtCarbon']
 
-GHG_emissions['source'] = 'Friedlingstein et al (2023)'
-GHG_emissions['geography'] = 'Global'
+#GHG_emissions['source'] = 'Friedlingstein et al (2023)'
+#GHG_emissions['geography'] = 'Global'
 
 # deforestation only 
 deforestation_emissions = pd.read_excel(
@@ -67,10 +67,18 @@ deforestation_emissions = deforestation_emissions.rename(columns={
     "deforestation (total)": "deforestation_emissions_GtCarbon"
 })
 
-deforestation_emissions['source'] = 'Friedlingstein et al (2023)'
-deforestation_emissions['geography'] = 'Global'
+#deforestation_emissions['source'] = 'Friedlingstein et al (2023)'
+#deforestation_emissions['geography'] = 'Global'
 
 
+###### Merge data
+
+merged_data = tourist_arrivals.copy()  
+merged_data = pd.merge(merged_data, aviation_emissions, on='Year', how='outer')
+merged_data = pd.merge(merged_data, GHG_emissions, on='Year', how='outer')
+merged_data = pd.merge(merged_data, deforestation_emissions, on='Year', how='outer')
+
+merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 
 
 
