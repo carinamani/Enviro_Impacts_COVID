@@ -28,6 +28,7 @@ for column in normalized_impact.columns:
         value_2019 = normalized_impact.loc[normalized_impact['Year'] == 2019, column].values[0]
         normalized_impact[column] = (normalized_impact[column] / value_2019) * 100
 
+normalized_impact.to_csv(f"{cd}/DATA/CLEAN/merged_data_normalized.csv")
 
 
 #### SELECT YEARS
@@ -40,7 +41,11 @@ print(column_names)
 normalized_impact_filtered = normalized_impact_filtered[['Year', 
                                                 'int_tourist_arrivals_millions',
                                                 'fossil_fuel_emissions_GtCarbon',
-                                                'deforestation_emissions_GtCarbon'
+                                                'deforestation_emissions_GtCarbon',
+                                                'land_use_emissions_GtCarbon', 
+                                                'deforestation_HA', 
+                                                'shipping_emissions_all_types_Mt_co2',
+                                                'shipping_volume_million_metric_tons'
                                                ]]
 
 # Plot
@@ -59,3 +64,13 @@ plt.legend()
 
 # Show the plot
 plt.show()
+
+
+
+
+
+
+
+
+
+
