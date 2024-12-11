@@ -42,10 +42,10 @@ normalized_impact_filtered = normalized_impact_filtered[['Year',
                                                 'int_tourist_arrivals_millions',
                                                 'fossil_fuel_emissions_GtCarbon',
                                                 'deforestation_emissions_GtCarbon',
-                                                'land_use_emissions_GtCarbon', 
                                                 'deforestation_HA', 
-                                                'shipping_emissions_all_types_Mt_co2',
-                                                'shipping_volume_million_metric_tons'
+                                                'shipping_volume_million_metric_tons', 
+                                                'cars_sold_non_EV', 
+                                                'cement_production_thousand_metric_tons'
                                                ]]
 
 # Plot

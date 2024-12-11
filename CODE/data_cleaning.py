@@ -147,6 +147,32 @@ shipping_volume_long['Year'] = shipping_volume_long['Year'].astype(int)
 #shipping_volume_long['geography'] = 'Global'
 
 
+# Our World in Data / IEA car sales
+
+car_sales = pd.read_csv(f"{cd}/DATA/RAW/OWD_car_sales.csv")
+car_sales = car_sales.drop(columns=['Entity', 'Code'])
+
+car_sales = car_sales.rename(columns={
+    "Year": "Year",
+    "Electric cars sold": "cars_sold_EV", 
+    "Non-electric car sales": "cars_sold_non_EV"
+})
+
+car_sales['cars_sold_total'] = car_sales['cars_sold_EV'] + car_sales['cars_sold_non_EV']
+
+#car_sales['source'] = 'Our World in Data - IEA'
+#car_sales['geography'] = 'Global'
+
+
+# USGS cement production 
+
+cement_production = pd.read_csv(f"{cd}/DATA/RAW/USGS_cement.csv")
+cement_production = cement_production.filter(items=["Year", "cement_production_thousand_metric_tons"])
+
+#cement_production['source'] = 'USGS'
+#cement_production['geography'] = 'Global'
+
+
 ###### Merge data
 
 merged_data = tourist_arrivals.copy()  
@@ -156,6 +182,8 @@ merged_data = pd.merge(merged_data, deforestation_emissions, on='Year', how='out
 merged_data = pd.merge(merged_data, GFW_deforestation_global, on='Year', how='outer')
 merged_data = pd.merge(merged_data, shipping_emissions_annual, on='Year', how='outer')
 merged_data = pd.merge(merged_data, shipping_volume_long, on='Year', how='outer')
+merged_data = pd.merge(merged_data, car_sales, on='Year', how='outer')
+merged_data = pd.merge(merged_data, cement_production, on='Year', how='outer')
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 
