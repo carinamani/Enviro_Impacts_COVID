@@ -254,6 +254,20 @@ US_WFH_yearly_avg = US_WFH_yearly_avg.rename(columns={
 #US_WFH_yearly_avg['geography'] = 'USA'
 
 
+# OECD municipal waste  
+OECD_waste = pd.read_csv(f"{cd}/DATA/RAW/OECD_municipal_waste.csv")
+
+OECD_waste = OECD_waste[['TIME_PERIOD', 'OBS_VALUE']]
+
+OECD_waste = OECD_waste.rename(columns={
+    "TIME_PERIOD": "Year",
+    "OBS_VALUE": "total_municipal_waste_tonnes"
+})
+
+#OECD_waste['source'] = 'OECD'
+#OECD_waste['geography'] = 'OECD'
+
+
 
 ###### Merge data
 
@@ -272,6 +286,7 @@ merged_data = pd.merge(merged_data, fishing_global, on='Year', how='outer')
 merged_data = pd.merge(merged_data, emissions_cars_vans, on='Year', how='outer')
 merged_data = pd.merge(merged_data, timber_trade, on='Year', how='outer')
 merged_data = pd.merge(merged_data, US_WFH_yearly_avg, on='Year', how='outer')
+merged_data = pd.merge(merged_data, OECD_waste, on='Year', how='outer')
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 

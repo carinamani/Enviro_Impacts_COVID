@@ -44,11 +44,7 @@ normalized_impact_filtered = normalized_impact_filtered[['Year',
                                                 'deforestation_emissions_GtCarbon',
                                                 'deforestation_HA', 
                                                 'shipping_volume_million_metric_tons', 
-                                                'cars_sold_non_EV', 
-                                                'cement_production_thousand_metric_tons',
-                                                'tonnes_fish_landed', 
-                                                'passenger_vehicle_emissions_Gt_co2',
-                                                'exports_timber_products_USD', 
+                                                'total_municipal_waste_tonnes'
                                                ]]
 
 # Plot
