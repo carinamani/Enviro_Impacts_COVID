@@ -201,6 +201,8 @@ fishing_global.columns = ['Year', 'tonnes_fish_landed']
 
 fishing_global['Year'] = fishing_global['Year'].astype(int)
 
+#fishing.to_csv(f"{cd}/DATA/CLEAN/fish_data.csv")
+
 #fishing_global['source'] = 'FAO'
 #fishing_global['geography'] = 'Global'
 
