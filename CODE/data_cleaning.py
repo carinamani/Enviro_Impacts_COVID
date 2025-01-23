@@ -270,6 +270,20 @@ OECD_waste = OECD_waste.rename(columns={
 #OECD_waste['geography'] = 'OECD'
 
 
+# Outdoor participation
+
+outdoor_participation = pd.read_csv(f"{cd}/DATA/RAW/outdoor_participation.csv")
+
+#outdoor_participation['source'] = 'UNWTO'
+#outdoor_participation['geography'] = 'Global'
+
+
+# US Census gardening spend
+
+gardening_spend = pd.read_csv(f"{cd}/DATA/RAW/gardening_spend.csv")
+
+#gardening_spend['source'] = 'UNWTO'
+#gardening_spend['geography'] = 'Global'
 
 ###### Merge data
 
@@ -289,6 +303,8 @@ merged_data = pd.merge(merged_data, emissions_cars_vans, on='Year', how='outer')
 merged_data = pd.merge(merged_data, timber_trade, on='Year', how='outer')
 merged_data = pd.merge(merged_data, US_WFH_yearly_avg, on='Year', how='outer')
 merged_data = pd.merge(merged_data, OECD_waste, on='Year', how='outer')
+merged_data = pd.merge(merged_data, outdoor_participation, on='Year', how='outer')
+merged_data = pd.merge(merged_data, gardening_spend, on='Year', how='outer')
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 
