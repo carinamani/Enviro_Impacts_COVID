@@ -71,18 +71,18 @@ final_plot = normalized_impact[(normalized_impact['Year'] >= 2010)]
 
 final_plot = final_plot[['Year', 
                          'int_tourist_arrivals_millions',
-                         'deforestation_HA', 
-                         'shipping_emissions_all_types_Mt_co2', 
+                         'fossil_fuel_emissions_GtCarbon', 
+                         'shipping_volume_million_metric_tons', 
                          'cement_production_thousand_metric_tons', 
-                         'passenger_vehicle_emissions_Gt_co2'
+                         'millions_sales_garden_equipment'
                           ]]
 
 line_styles = {
     'int_tourist_arrivals_millions': {'color': 'red', 'linestyle': '-'},
-    'deforestation_HA': {'color': 'red', 'linestyle': '--'},
-    'shipping_emissions_all_types_Mt_co2': {'color': 'black', 'linestyle': '-'},
+    'fossil_fuel_emissions_GtCarbon': {'color': 'red', 'linestyle': '--'},
+    'shipping_volume_million_metric_tons': {'color': 'black', 'linestyle': '-'},
     'cement_production_thousand_metric_tons': {'color': 'black', 'linestyle': '--'},
-    'passenger_vehicle_emissions_Gt_co2': {'color': 'green', 'linestyle': '-'}
+    'millions_sales_garden_equipment': {'color': 'green', 'linestyle': '-'}
 }
 
 plt.figure(figsize=(10, 6))
@@ -105,6 +105,44 @@ plt.title('Normalized Impact Over Time')
 plt.legend()
 
 plt.savefig(f"{cd}/FIGURES/normalized_line_pretty.png", dpi=300)  
+
+plt.show()
+
+
+
+
+# Plot PRETTY WFH
+
+final_plot = normalized_impact[(normalized_impact['Year'] >= 2010)]
+
+final_plot = final_plot[['Year', 
+                         'USA_WFH_share'
+                          ]]
+
+line_styles = {
+    'USA_WFH_share': {'color': 'green', 'linestyle': '-'},
+}
+
+plt.figure(figsize=(10, 6))
+
+for column in final_plot.columns:
+    if column != 'Year':
+        plt.plot(
+            final_plot['Year'], 
+            final_plot[column], 
+            label=column, 
+            color=line_styles[column]['color'], 
+            linestyle=line_styles[column]['linestyle']
+        )
+        
+plt.axhline(y=100, color='grey', linestyle=':', linewidth=1)
+
+plt.xlabel('Year')
+plt.ylabel('Index, 2019=100')
+plt.title('Normalized Impact Over Time')
+plt.legend()
+
+plt.savefig(f"{cd}/FIGURES/normalized_line_pretty_WFH.png", dpi=300)  
 
 plt.show()
 
