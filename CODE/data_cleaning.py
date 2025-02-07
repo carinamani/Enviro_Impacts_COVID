@@ -285,6 +285,23 @@ gardening_spend = pd.read_csv(f"{cd}/DATA/RAW/gardening_spend.csv")
 #gardening_spend['source'] = 'UNWTO'
 #gardening_spend['geography'] = 'Global'
 
+
+# US paid fishing license holders
+
+fishing = pd.read_csv(f"{cd}/DATA/RAW/USFWS_Paid_Fishing_License_Holders.csv")
+
+#gardening_spend['source'] = 'UNWTO'
+#gardening_spend['geography'] = 'Global'
+
+
+# US paid hunting license holders
+
+hunting = pd.read_csv(f"{cd}/DATA/RAW/USFWS_Paid_Hunting_License_Holders.csv")
+
+#gardening_spend['source'] = 'UNWTO'
+#gardening_spend['geography'] = 'Global'
+
+
 ###### Merge data
 
 merged_data = tourist_arrivals.copy()  
@@ -305,6 +322,9 @@ merged_data = pd.merge(merged_data, US_WFH_yearly_avg, on='Year', how='outer')
 merged_data = pd.merge(merged_data, OECD_waste, on='Year', how='outer')
 merged_data = pd.merge(merged_data, outdoor_participation, on='Year', how='outer')
 merged_data = pd.merge(merged_data, gardening_spend, on='Year', how='outer')
+merged_data = pd.merge(merged_data, fishing, on='Year', how='outer')
+merged_data = pd.merge(merged_data, hunting, on='Year', how='outer')
+
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 
