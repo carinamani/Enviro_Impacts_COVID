@@ -74,7 +74,8 @@ final_plot = final_plot[['Year',
                          'fossil_fuel_emissions_GtCarbon', 
                          'shipping_volume_million_metric_tons', 
                          'cement_production_thousand_metric_tons', 
-                         'millions_sales_garden_equipment'
+                         'millions_sales_garden_equipment',
+                         'USA_WFH_share'
                           ]]
 
 line_styles = {
@@ -82,7 +83,8 @@ line_styles = {
     'fossil_fuel_emissions_GtCarbon': {'color': 'red', 'linestyle': '--'},
     'shipping_volume_million_metric_tons': {'color': 'black', 'linestyle': '-'},
     'cement_production_thousand_metric_tons': {'color': 'black', 'linestyle': '--'},
-    'millions_sales_garden_equipment': {'color': 'green', 'linestyle': '-'}
+    'millions_sales_garden_equipment': {'color': 'green', 'linestyle': '-'},
+    'USA_WFH_share': {'color': 'green', 'linestyle': '--'}
 }
 
 plt.figure(figsize=(10, 6))
@@ -103,6 +105,8 @@ plt.xlabel('Year')
 plt.ylabel('Index, 2019=100')
 plt.title('Normalized Impact Over Time')
 plt.legend()
+
+plt.ylim(30, 160)
 
 plt.savefig(f"{cd}/FIGURES/normalized_line_pretty.png", dpi=300)  
 
