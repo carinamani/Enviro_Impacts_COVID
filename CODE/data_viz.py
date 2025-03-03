@@ -153,6 +153,87 @@ plt.show()
 
 
 
+# Outdoor rec test
+
+outdoor_test = normalized_impact[(normalized_impact['Year'] >= 2010)]
+
+final_plot = outdoor_test[['Year', 
+                         'participation_in_outdoor_rec_percent',
+                         'participation_in_outdoor_rec_million',
+                         'number_of_outdoor_excursions'
+                          ]]
+
+line_styles = {
+    'participation_in_outdoor_rec_percent': {'color': 'green', 'linestyle': '--'},
+    'participation_in_outdoor_rec_million': {'color': 'green', 'linestyle': '-'},
+    'number_of_outdoor_excursions': {'color': 'green', 'linestyle': ':'}
+}
+
+plt.figure(figsize=(10, 6))
+
+for column in final_plot.columns:
+    if column != 'Year':
+        plt.plot(
+            final_plot['Year'], 
+            final_plot[column], 
+            label=column, 
+            color=line_styles[column]['color'], 
+            linestyle=line_styles[column]['linestyle']
+        )
+        
+plt.axhline(y=100, color='grey', linestyle=':', linewidth=1)
+
+plt.xlabel('Year')
+plt.ylabel('Index, 2019=100')
+plt.title('Normalized Impact Over Time')
+plt.legend()
+
+plt.savefig(f"{cd}/FIGURES/outdoor_rec_test.png", dpi=300)  
+
+plt.show()
 
 
+
+
+
+
+
+# Plot PRETTY 
+
+final_plot = normalized_impact[(normalized_impact['Year'] >= 2010)]
+
+final_plot = final_plot[['Year', 
+                         'land_use_emissions_GtCarbon',
+                         'fossil_fuel_emissions_GtCarbon'
+                          ]]
+
+line_styles = {
+    'land_use_emissions_GtCarbon': {'color': 'red', 'linestyle': '-'},
+    'fossil_fuel_emissions_GtCarbon': {'color': 'red', 'linestyle': '--'}
+}
+
+plt.figure(figsize=(10, 6))
+
+for column in final_plot.columns:
+    if column != 'Year':
+        plt.plot(
+            final_plot['Year'], 
+            final_plot[column], 
+            label=column, 
+            color=line_styles[column]['color'], 
+            linestyle=line_styles[column]['linestyle']
+        )
+        
+plt.axhline(y=100, color='grey', linestyle=':', linewidth=1)
+
+plt.xlabel('Year')
+plt.ylabel('Index, 2019=100')
+plt.title('Normalized Impact Over Time')
+plt.legend()
+
+plt.ylim(30, 160)
+
+plt.savefig(f"{cd}/FIGURES/normalized_line_pretty_LU.png", dpi=300)  
+
+plt.show()
 
