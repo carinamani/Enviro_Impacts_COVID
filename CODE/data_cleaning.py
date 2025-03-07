@@ -309,6 +309,12 @@ outdoor_parcipitation = pd.read_csv(f"{cd}/DATA/RAW/outdoor_trends.csv")
 #gardening_spend['source'] = 'UNWTO'
 #gardening_spend['geography'] = 'Global'
 
+# Finland outdoor visits
+
+Finland_outdoor_visits = pd.read_csv(f"{cd}/DATA/RAW/Finland_outdoor_visits.csv")
+
+#gardening_spend['source'] = 'UNWTO'
+#gardening_spend['geography'] = 'Global'
 
 ###### Merge data
 
@@ -333,6 +339,7 @@ merged_data = pd.merge(merged_data, gardening_spend, on='Year', how='outer')
 merged_data = pd.merge(merged_data, fishing, on='Year', how='outer')
 merged_data = pd.merge(merged_data, hunting, on='Year', how='outer')
 merged_data = pd.merge(merged_data, outdoor_parcipitation, on='Year', how='outer')
+merged_data = pd.merge(merged_data, Finland_outdoor_visits, on='Year', how='outer')
 
 merged_data.to_csv(f"{cd}/DATA/CLEAN/merged_data_gross.csv")
 

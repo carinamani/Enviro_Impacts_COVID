@@ -75,6 +75,7 @@ final_plot = final_plot[['Year',
                          'shipping_volume_million_metric_tons', 
                          'cement_production_thousand_metric_tons', 
                          'millions_sales_garden_equipment',
+                         'Finland_outdoor_visits',
                          'USA_WFH_share'
                           ]]
 
@@ -84,6 +85,7 @@ line_styles = {
     'shipping_volume_million_metric_tons': {'color': 'black', 'linestyle': '-'},
     'cement_production_thousand_metric_tons': {'color': 'black', 'linestyle': '--'},
     'millions_sales_garden_equipment': {'color': 'green', 'linestyle': '-'},
+    'Finland_outdoor_visits': {'color': 'green', 'linestyle': ':'},
     'USA_WFH_share': {'color': 'green', 'linestyle': '--'}
 }
 
@@ -234,6 +236,49 @@ plt.legend()
 plt.ylim(30, 160)
 
 plt.savefig(f"{cd}/FIGURES/normalized_line_pretty_LU.png", dpi=300)  
+
+plt.show()
+
+
+
+
+
+
+
+# Plot PRETTY 
+
+final_plot = normalized_impact[(normalized_impact['Year'] >= 2010)]
+
+final_plot = final_plot[['Year', 
+                         'Finland_outdoor_visits'
+                          ]]
+
+line_styles = {
+    'Finland_outdoor_visits': {'color': 'green', 'linestyle': '-'}
+}
+
+plt.figure(figsize=(10, 6))
+
+for column in final_plot.columns:
+    if column != 'Year':
+        plt.plot(
+            final_plot['Year'], 
+            final_plot[column], 
+            label=column, 
+            color=line_styles[column]['color'], 
+            linestyle=line_styles[column]['linestyle']
+        )
+        
+plt.axhline(y=100, color='grey', linestyle=':', linewidth=1)
+
+plt.xlabel('Year')
+plt.ylabel('Index, 2019=100')
+plt.title('Normalized Impact Over Time')
+plt.legend()
+
+plt.ylim(30, 160)
+
+plt.savefig(f"{cd}/FIGURES/Finland_visits.png", dpi=300)  
 
 plt.show()
 
