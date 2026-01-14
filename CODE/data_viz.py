@@ -9,6 +9,7 @@ Created on Wed Dec 11 11:59:13 2024
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Get the current working directory
 cd = os.getcwd()
@@ -71,47 +72,79 @@ final_plot = normalized_impact[(normalized_impact['Year'] >= 2010)]
 
 final_plot = final_plot[['Year', 
                          'int_tourist_arrivals_millions',
-                         'fossil_fuel_emissions_GtCarbon', 
-                         'shipping_volume_million_metric_tons', 
+                         'deforestation_HA',
+                         'tonnes_fish_landed', 
                          'cement_production_thousand_metric_tons', 
                          'millions_sales_garden_equipment',
-                         'Finland_outdoor_visits',
+                         'participation_in_outdoor_rec_million',
                          'USA_WFH_share'
                           ]]
 
 line_styles = {
     'int_tourist_arrivals_millions': {'color': 'red', 'linestyle': '-'},
-    'fossil_fuel_emissions_GtCarbon': {'color': 'red', 'linestyle': '--'},
-    'shipping_volume_million_metric_tons': {'color': 'black', 'linestyle': '-'},
+    'deforestation_HA': {'color': 'red', 'linestyle': '--'},
+    'tonnes_fish_landed': {'color': 'black', 'linestyle': '-'},
     'cement_production_thousand_metric_tons': {'color': 'black', 'linestyle': '--'},
     'millions_sales_garden_equipment': {'color': 'green', 'linestyle': '-'},
-    'Finland_outdoor_visits': {'color': 'green', 'linestyle': ':'},
+    'participation_in_outdoor_rec_million': {'color': 'green', 'linestyle': ':'},
     'USA_WFH_share': {'color': 'green', 'linestyle': '--'}
 }
 
-plt.figure(figsize=(10, 6))
+pretty_labels = {
+    'int_tourist_arrivals_millions': 'International Tourist Arrivals (UNWTO)',
+    'deforestation_HA': 'Deforestation (GFW)',
+    'tonnes_fish_landed': 'Tonnes of Fish Landed (FAO)',
+    'cement_production_thousand_metric_tons': 'Cement Production (USGS)',
+    'millions_sales_garden_equipment': 'Garden Equipment Sales in US (US Census Bureau)',
+    'participation_in_outdoor_rec_million': 'Outdoor Visits in US (OIA)',
+    'USA_WFH_share': 'Work-from-Home Share in US (NBER))'
+}
 
+# Use seaborn styling
+plt.style.use('seaborn-v0_8-white')  
+
+plt.figure(figsize=(12, 7))
+
+# Plot with relabeled lines
 for column in final_plot.columns:
     if column != 'Year':
         plt.plot(
             final_plot['Year'], 
             final_plot[column], 
-            label=column, 
+            label=pretty_labels[column],  # Use the pretty label here
             color=line_styles[column]['color'], 
-            linestyle=line_styles[column]['linestyle']
+            linestyle=line_styles[column]['linestyle'],
+            linewidth=2
         )
-        
+
+# Add reference line at index 100
 plt.axhline(y=100, color='grey', linestyle=':', linewidth=1)
 
+# Label and title
 plt.xlabel('Year')
-plt.ylabel('Index, 2019=100')
-plt.title('Normalized Impact Over Time')
-plt.legend()
+plt.ylabel('Index (2019 = 100)')
+plt.title('Normalized Impact Over Time', fontsize=14, fontweight='bold')
 
-plt.ylim(30, 160)
+# Legend outside the plot
+plt.legend(
+    loc='upper left', 
+    fontsize=12,           
+    labelspacing=0.4,     
+    frameon=True,         
+    framealpha=0.9        
+)
 
-plt.savefig(f"{cd}/FIGURES/normalized_line_pretty.png", dpi=300)  
+# Tighter layout
+plt.tight_layout()
 
+# Y-axis limits
+plt.xlim(2010, 2024)
+plt.ylim(20, 160)
+
+# Save the figure
+plt.savefig(f"{cd}/FIGURES/normalized_line_pretty.png", dpi=300, bbox_inches='tight')
+
+# Show the plot
 plt.show()
 
 

@@ -37,7 +37,7 @@ aviation_emissions = pd.read_csv(f"{cd}/DATA/RAW/IEA_aviation_emissions.csv")
 
 # aggregated FF and LUC emissions 
 GHG_emissions = pd.read_excel(
-    f"{cd}/DATA/RAW/Data supplement to the Global Carbon Budget 2023/Global_Carbon_Budget_2023v1.1.xlsx",
+    f"{cd}/DATA/RAW/Data supplement to the Global Carbon Budget 2023/Global_Carbon_Budget_2024_v1.02.xlsx",
     sheet_name="Global Carbon Budget",
     skiprows=21  
 )
@@ -75,7 +75,7 @@ deforestation_emissions = deforestation_emissions.rename(columns={
 
 # GFW deforestation 
 
-GFW_deforestation = pd.read_csv(f"{cd}/DATA/RAW/Global Primary Forest loss/treecover_loss__ha.csv")
+GFW_deforestation = pd.read_csv(f"{cd}/DATA/RAW/Global Primary Forest loss_2/treecover_loss__ha.csv")
 
 GFW_deforestation_global = GFW_deforestation.groupby('umd_tree_cover_loss__year')[['umd_tree_cover_loss__ha', 'gfw_gross_emissions_co2e_all_gases__Mg']].sum().reset_index()
 
@@ -190,7 +190,7 @@ US_park_visits = pd.read_csv(f"{cd}/DATA/RAW/US_NPS_visits.csv")
 
 
 # FAO fish landings 
-fishing = pd.read_csv(f"{cd}/DATA/RAW/FAO_fish_landed.csv")
+fishing = pd.read_csv(f"{cd}/DATA/RAW/FAO_fish_landed_tonnes.csv")
 fishing = fishing.loc[:, ~fishing.columns.str.contains('Flag')]
 fishing = fishing[fishing['Unit Name'] != 'Number']
 
